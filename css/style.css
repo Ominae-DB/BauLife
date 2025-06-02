@@ -34,7 +34,7 @@ body {
 header {
     background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-secondary-green) 100%);
     color: var(--color-text-light);
-    padding: 1.2rem 0;
+    /* Rimuovi padding top/bottom qui per controllare altezza con navbar */
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: sticky;
     top: 0;
@@ -47,42 +47,54 @@ header {
     align-items: center;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 10px 30px; /* Padding per controllare altezza complessiva della barra */
+    min-height: 90px; /* Altezza minima della barra di navigazione */
+    flex-wrap: wrap; 
+    position: relative; /* Necessario per il posizionamento assoluto del logo */
 }
 
+/* Stile per il contenitore del logo immagine */
 .logo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.3rem; /* Leggermente più grande */
-    font-weight: 900; /* Più audace */
-    /* Nuovo stile per il logo: gradiente più vivace e nessun text-shadow scuro */
-    background: linear-gradient(45deg, var(--color-accent-yellow), var(--color-accent-orange)); 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Ombra più leggera per dare profondità senza spegnere */
-    letter-spacing: 1.8px; /* Leggermente più spazioso */
-    animation: bounceIn 1.5s ease-out; /* Animazione all'apertura */
+    position: absolute; /* Posizionamento assoluto per sganciare dall'altezza della navbar */
+    left: -290px; /* Allineamento a sinistra */
+    top: 50%; /* Centro verticale rispetto alla navbar */
+    transform: translateY(-50%); /* Ajusta per centrare perfettamente */
+    z-index: 10; /* Assicurati che sia sopra altri elementi se si sovrappongono */
 }
 
-@keyframes bounceIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    70% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); }
+.logo img {
+    height: 400px; /* Altezza del tuo logo (modifica qui manualmente) */
+    width: auto; /* Mantieni le proporzioni */
+    display: block; /* Rimuovi spazi extra sotto l'immagine */
+    animation: fadeIn 1.5s ease-out; /* Animazione all'apertura */
 }
 
-.navbar p {
+/* Stile per la tagline */
+.tagline {
+    /* Posizionamento relativo per la tagline, rispetto al flusso normale o con margini */
+    margin-left: 150px; /* Sposta la tagline a destra del logo */
+    /* Potresti aver bisogno di aggiustare questo margine in base alla larghezza del tuo logo */
+    /* Assicurati che la tagline non si sovrapponga al logo */
+}
+
+.tagline p {
     font-family: 'Open Sans', sans-serif;
-    font-size: 1.15rem; /* Leggermente più grande */
+    font-size: 1.15rem; /* Puoi modificarla se vuoi */
     font-style: italic;
     color: var(--color-text-light);
-    opacity: 0.95; /* Meno opaco */
-    margin-left: 20px;
+    opacity: 0.95;
+    white-space: nowrap; /* Evita che la frase vada a capo */
+    margin: 0; /* Rimuovi margini predefiniti */
+    padding: 0;
 }
 
+/* Regola i link di navigazione per allinearsi correttamente */
 .nav-links {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
+    margin-left: auto; /* Sposta i link a destra */
 }
 
 .nav-links li {
@@ -710,16 +722,32 @@ header {
         flex-direction: column;
         text-align: center;
         padding: 0 15px;
+        min-height: auto; /* Rimuovi altezza fissa su mobile per adattamento */
+        padding-top: 10px; /* Aggiungi padding per spazio */
+        padding-bottom: 10px;
     }
-    .navbar p {
-        margin-left: 0;
-        margin-top: 10px;
+    .logo {
+        position: static; /* Rimuovi posizionamento assoluto su schermi piccoli */
+        transform: none; /* Rimuovi la trasformazione */
+        margin-bottom: 10px; /* Spazio sotto il logo */
+    }
+    /* Regola il margine superiore per la tagline su schermi piccoli */
+    .tagline {
+        margin-left: 0; /* Rimuovi il margine a sinistra */
+        margin-top: 5px; /* Piccolo spazio tra logo e tagline */
+        order: 1; /* Posiziona la tagline sopra il logo o dopo il logo */
+        width: 100%; /* Occupa tutta la larghezza */
+    }
+    .tagline p {
         font-size: 1rem;
+        margin-bottom: 15px; /* Spazio sotto la tagline */
     }
     .nav-links {
-        margin-top: 25px;
+        margin-top: 15px;
         flex-wrap: wrap;
         justify-content: center;
+        margin-left: 0; /* Rimuovi il margine a sinistra */
+        order: 2; /* Posiziona i link di navigazione sotto */
     }
     .nav-links li {
         margin: 0 12px 15px 12px;
@@ -832,9 +860,6 @@ header {
 }
 
 @media (max-width: 768px) {
-    .logo {
-        font-size: 1.8rem;
-    }
     .navbar p {
         font-size: 0.9rem;
     }
